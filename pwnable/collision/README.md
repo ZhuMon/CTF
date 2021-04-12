@@ -16,16 +16,39 @@ total 16
 -r--r----- 1 col_pwn col_pwn   52 Jun 11  2014 flag
 ```
 * 查看 col.c，會發現要輸入 20 個字元，並且經由下方 function 轉換後要等於 0x21DD09EC
-```
+```c
+#include <stdio.h>
+#include <string.h>
+unsigned long hashcode = 0x21DD09EC;
 unsigned long check_password(const char* p){
-	int* ip = (int*)p;
-	int i;
-	int res=0;
-	for(i=0; i<5; i++){
-		res += ip[i];
-	}
-	return res;
+        int* ip = (int*)p;
+        int i;
+        int res=0;
+        for(i=0; i<5; i++){
+                res += ip[i];
+        }
+        return res;
 }
+
+int main(int argc, char* argv[]){
+        if(argc<2){
+                printf("usage : %s [passcode]\n", argv[0]);
+                return 0;
+        }
+        if(strlen(argv[1]) != 20){
+                printf("passcode length should be 20 bytes\n");
+                return 0;
+        }
+
+        if(hashcode == check_password( argv[1] )){
+                system("/bin/cat flag");
+                return 0;
+        }
+        else
+                printf("wrong passcode.\n");
+        return 0;
+}
+
 ``` 
 * 首先要先搞懂 `int* ip = (int*)p;` 是什麼意思
 * 由於 p 是個 20 byte 的 char array, 所以將 p 轉成 int* 形式, 可以得到一個 int array
