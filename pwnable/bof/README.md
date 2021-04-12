@@ -9,7 +9,7 @@ $ wget http://pwnable.kr/bin/bof
 $ wget http://pwnable.kr/bin/bof.c
 ```
 ## Code
-```
+```c
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
