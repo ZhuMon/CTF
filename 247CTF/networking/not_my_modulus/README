@@ -1,0 +1,14 @@
+# Not my modulus
+## requirement
+* python3 
+* scapy >= 2.4.0
+
+## Usage
+* untar the keys.tar.gz
+    ```
+    $ tar -xf keys.tar.gz
+    ```
+* run the scipt
+    ```
+    python3 anal.py
+    ```
