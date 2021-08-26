@@ -1,0 +1,600 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0035)https://merricx.github.io/qrazybox/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" class=" applicationcache json filereader localstorage atobbtoa atob-btoa webworkers canvas csspointerevents imgcrossorigin no-overflowscrolling fileinput"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/style.css">
+<link rel="icon" href="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/icon.png">
+<title>QRazyBox - QR Code Analysis and Recovery Toolkit</title>
+</head>
+
+
+<body>
+	<!-- START LOADER OVERLAY -->
+	<div class="loader" style="display: none;">
+		<div>
+			<img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/icon.png" class="logo">
+			<br><br><br>
+			<img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/preloader.gif" class="animated">
+		</div>
+	</div>
+	<!-- END LOADER OVERLAY -->
+
+	<!-- START HEADER MENU -->
+	<div class="header noselect">
+		<div class="left">
+			<img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/icon.png" class="icon">
+			<h3>QRazyBox</h3>
+		</div>
+		
+		<div class="right" id="header-menu">
+			<a id="menu-new" href="javascript:void(0);"><h4>New</h4></a>
+			<a id="menu-load" href="javascript:void(0);"><h4>Load</h4></a>
+			<a id="menu-save" href="javascript:void(0);"><h4>Save</h4></a>
+			<a id="menu-tools" href="javascript:void(0);"><h4>Tools</h4></a>
+			<a id="menu-help" href="https://merricx.github.io/qrazybox/help/index.html" target="_blank"><h4>Help</h4></a>
+			<a id="menu-about" href="javascript:void(0);" onclick="$(&#39;#div-about&#39;).show();"><h4>About</h4></a>
+		</div>
+
+		<img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/bars.png" class="menu-bar right">
+	</div>
+	<!-- END HEADER MENU -->
+
+	<!-- START SIDE FLOATING NAVIGATION -->
+	<div class="float-nav left noselect">
+		<h2>›</h2>
+	</div>
+	<div class="float-nav right noselect">
+		<h2>‹</h2>
+	</div>
+	<!-- END SIDE FLOATING NAVIGATION -->
+
+	<!-- START FOOTER TOOLBOX -->	
+	<div class="footer noselect hide">
+		<div class="mode-indicator">
+			<button id="mobile-editor-mode" class="active">Editor</button>
+			<button id="mobile-decode-mode">Decode</button>
+		</div>
+	</div>
+	<!-- END FOOTER TOOLBOX -->
+
+	<!-- START LEFT TOOLBOX -->
+	<div class="left-box">
+
+		<div style="height:60px;"></div>
+
+		<div class="side-box  noselect" id="box-mode">
+		<center><button id="btn-switch-mode" style="width:100%;">Editor Mode</button></center>
+		</div>
+
+		<!-- START EDITOR TOOLBOX -->
+		<div class="side-box  noselect" id="box-work">
+			<div id="div-tool-work">
+				<h5>Painter :</h5>
+				<div class="painter-box" id="painter-box">
+					<div class="active" index="0" id="painter-black"><img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/pixel-black.png"></div>
+					<div index="1" id="painter-white"><img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/pixel-white.png"></div>
+					<div index="2" id="painter-eraser"><img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/eraser-tool.png"></div>
+				</div>
+				<div class="painter-box">
+					<div id="painter-fill"><img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/fill-tool.png"></div>
+				</div>
+				<div class="clear"></div>
+				<h5>QR-Code version :</h5>
+				<input id="qr-version" type="text" readonly="" value="21x21 (ver. 1)">
+				<div class="toolbox">
+					<div id="btn-version-min" class="minus"><img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/minus.png"></div>
+					<div id="btn-version-plus" class="plus"><img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/plus.png"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<h5>Module Size :</h5>
+			<input id="qr-size" type="text" readonly="" value="10px">
+			<div class="toolbox">
+				<div id="btn-size-min" class="minus"><img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/minus.png"></div>
+				<div id="btn-size-plus" class="plus"><img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/plus.png"></div>
+			</div>
+			<div class="clear"></div>
+			<div id="div-tool-result" class="hide">
+				<h5>Grey Modules :</h5>
+				<button class="toggle active" id="btn-show-grey-pixel">Show</button>
+				<h5>QR Decoder :</h5>
+				<button id="btn-qr-decode">Decode</button>
+				<h6 id="h6-brute-force-msg">*Decoding will brute-forcing <br>possible format info pattern</h6>
+				<div class="clear"></div>
+				<!--<h5>Save as Image :</h5>
+				<button class="" id="btn-save-as-image">Download</button>-->
+			</div>
+		</div>
+		<!-- END EDITOR TOOLBOX -->
+
+		<!-- START EXTRACT QR INFO TOOLBOX -->
+		<div id="box-tools-extract" class="side-box hide">
+			<h5>Error Correction log : </h5>
+			<button id="btn-extract-show-rs" class="toggle">Show</button>
+			<h5>Decoding Error : </h5>
+			<div class="clear"></div>
+			<button id="btn-extract-show-error" class="toggle">Show</button>
+			<div class="clear"></div>
+			<div class="space"></div>
+			<div><center><button id="btn-tools-extract">Back to editor</button></center></div>
+		</div>
+		<!-- END EXTRACT QR INFO TOOLBOX -->
+
+		<!-- START DATA SEQUENCE TOOLBOX -->
+		<div id="box-tools-analysis" class="side-box hide">
+			<h5>Value : </h5>
+			<input type="text" value="" class="full" id="data-analysis-value">
+			<div class="clear"></div>
+			<h5>Type : </h5>
+			<input type="text" readonly="" value="" class="full read-only" id="data-analysis-type">
+			<div class="clear"></div>
+			<h5>Decoded data : </h5>
+			<input type="text" readonly="" value="" class="full read-only" id="data-analysis-decoded">
+			<div class="clear"></div>
+			<div class="space"></div>
+		</div>
+		<!-- END DATA SEQUENCE TOOLBOX -->
+		</div>
+	<!-- END LEFT TOOLBOX -->
+
+	<!-- START RIGHT TOOLBOX -->	
+	<div class="right-box">
+
+		<div style="height:60px;"></div>
+
+		<!-- START IMAGE SAMPLE TOOLBOX -->
+		<div class="side-box  noselect" id="box-sample">
+			<h5>Original Sample :</h5>
+			<div class="sample-box">
+				<img src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/saved_resource" id="img-sample">
+			</div>
+			<input id="sample-file" type="file" class="hide">
+			<div class="space"></div>
+			<center>
+				<label for="sample-file" class="sample-btn">
+				Load Sample
+				</label>
+			</center>
+		</div>
+		<!-- END IMAGE SAMPLE TOOLBOX -->
+
+		<!-- START HISTORY TOOLBOX -->
+		<div class="side-box  noselect" id="box-history">
+			<h5>History :</h5>
+			<div class="history"><div class="active" id="history-0"><h6>New QR code</h6></div></div>
+		</div>
+		<!-- END HISTORY TOOLBOX -->
+	
+	</div>
+	<!-- END RIGHT TOOLBOX -->	
+
+	<!-- START MAIN WORKSPACE -->
+	<div class="main">
+		<div class="qr-box">
+		<table id="qr-table" class="qr-tab"><tbody><tr><td class="static black" id="qr-0-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-0-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-0-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-0-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-0-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-0-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-0-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-0-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-0-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-0-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-0-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-0-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-0-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-1-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-1-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-1-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-1-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-1-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-1-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-1-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-1-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-1-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-1-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-1-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-1-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-1-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-1-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-2-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-2-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-2-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-2-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-2-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-2-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-2-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-2-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-2-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-2-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-2-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-2-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-2-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-2-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-2-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-2-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-2-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-3-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-3-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-3-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-3-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-3-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-3-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-3-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-3-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-3-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-3-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-3-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-3-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-3-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-3-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-3-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-3-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-3-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-4-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-4-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-4-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-4-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-4-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-4-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-4-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-4-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-4-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-4-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-4-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-4-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-4-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-4-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-4-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-4-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-4-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-5-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-5-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-5-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-5-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-5-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-5-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-5-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-5-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-5-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-5-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-5-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-5-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-5-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-5-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-6-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-6-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-6-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-6-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-6-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-6-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-6-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-6-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static" id="qr-7-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-7-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-7-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-7-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-7-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-7-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-7-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-7-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-7-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-7-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-7-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="info" id="qr-8-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-8-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-8-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-8-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-8-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-8-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-8-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-8-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-8-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-8-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-8-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td id="qr-9-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-9-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-9-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td id="qr-10-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-10-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-10-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td id="qr-11-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-11-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-11-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td id="qr-12-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-12-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-12-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td id="qr-13-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-13-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-13-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td id="qr-14-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-14-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-14-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td id="qr-15-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-15-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-15-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td id="qr-16-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-16-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-16-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-16-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-16-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-16-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-16-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-16-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static" id="qr-17-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-17-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-17-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-17-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-17-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-17-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-18-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-18-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-18-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-18-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-18-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-18-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-18-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-19-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-19-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-19-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-19-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-19-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-19-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-19-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-20-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-20-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-20-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-20-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-20-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-20-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-20-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-21-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-21-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-21-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-21-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-21-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-21-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-21-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-21-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-21-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-21-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-22-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-22-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-22-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-22-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-22-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-22-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-22-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-22-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-22-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-22-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-23-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-23-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-23-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-23-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-23-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-23-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-23-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-23-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-23-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-23-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr><tr><td class="static black" id="qr-24-0" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-24-1" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-24-2" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-24-3" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-24-4" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-24-5" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static black" id="qr-24-6" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="static" id="qr-24-7" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td class="info" id="qr-24-8" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-9" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-10" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-11" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-12" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-13" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-14" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-15" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-16" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-17" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-18" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-19" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-20" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-21" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-22" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-23" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td><td id="qr-24-24" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px;"></td></tr></tbody></table>
+		<table id="qr-overlay" class="qr-tab"></table>
+		<canvas id="qr-result" class="hide"></canvas>
+		</div>
+		<div id="div-extract" class="div-extract hide">
+			
+		</div>
+	</div>
+	<!-- END MAIN WORKSPACE -->
+
+	<!-- START WELCOME PAGE OVERLAY -->
+	<div class="overlay" id="home-box" style="display: none;">
+	<center>
+		<div class="box">
+			<h1 class="title">QRazyBox</h1>
+			<div class="space"></div>
+			<button id="home-new" class="big yellow">New Project</button>
+			<button id="home-load" class="big green">Load Existing Project</button>
+			<div class="space"></div>
+		</div>
+	</center>
+	</div>
+	<!-- END WELCOME PAGE OVERLAY -->
+
+	<!-- START NEW OVERLAY -->
+	<div class="overlay hide" id="div-new" style="display: none;">
+	<center>
+		<div class="box">
+		<h3>New Project</h3>
+		<div class="space"></div>
+		<button id="new-btn-new" class="big">New blank QR code</button>
+		<button id="new-btn-import-img" class="big">Import from Image</button>
+		<div class="clear"></div>
+		<input type="file" class="invisible" id="import-img">
+		<canvas id="hidden-canvas" class="hide"></canvas>
+		<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcUAAAHdCAYAAABsRGJyAAAYT2lDQ1BJQ0MgUHJvZmlsZQAAWIWVWQk0Vd3b3+fO95rvNc/zTOZ5nud5JuGarimuMZRIMpWoEKWSjJVKoRKRBqUMvSRJJEOlUFEZ8h1D/d//+671fevba+1zfvfZz36GvZ89POcCwLXfNzIyDMEIQHhEDNXB1IDfzd2DH/sOIAASQHDV9CVHR+rb2VkBuPx+/3dZGoQ54fJcZkPWv9v/18LkHxBNBgCyg7GffzQ5HMbXAUClkyOpMQBg1GC6UHxM5Ab2gjEzFTYQxpEbOGgLp29gvy1cvMnj5GAI44sA4Gh9falBANA3w3T+OHIQLId+CG4jRvhTImDWWRjrkIN9/QHgkoZ5pMPDd29gNxiL+/1NTtB/yfT7I9PXN+gP3vJls+CMKNGRYb57/p/D8X+X8LDY3zpE4UobTDVz2PAZHreh0N2WG5gWxrMRfja2MCbC+AfFf5MfxghCcKyZ8xY/gpscbQiPGWCFsZy/r5EljLlhbBIRZmO1TfcLpJiYwxiOEEQCJcbcabtvZkC0seO2zFPU3Q62v3Eg1VB/u+9lX+qm3g3+zthQZ/1t+UPBAea/5X9LDHZy3bIZSYijuNjAmB7GrNGhjpZbPEjhxGBDm9881FiHDfuFYawREGFqsCUf6R1INXHY5qeGR//2F5kZTDG32cYlMcFOZttyLpJ9N+1nh3FzQIS+8285AdFuVr998Q8wMt7yHdkbEOG87S9yLDLGwGG775fIMLttfhQhIMx0gy4IY+7oOMftviidGDggt+SjbCJj7Jy27ET5hfha2G3Zg0oAVsAQGAF+EAtXP7AbhADKs9mmWfjXVosJ8AVUEAQCgMw25XcP182WCPjpCBLBJxgFgOg//Qw2WwNAHExf+0PdesqAwM3WuM0eoWAKxuHAEoTBv2M3e0X80eYC3sEUyr+0k2Fbw+C60fZvmj5MsdqmxP6Wy8/wmxNjjDHCmGFMMBIoTpQOShNlBT/14KqAUkOp/7b2P/zoKXQf+i16AD2GfrmLkkb9hz/8wBqMwRpMtn32+7vPKFFYqjLKAKUNy4dlo1hRnEAGpQRr0kfpwrqVYarhtuUb3v9T9n/58LdR3+bDy+EReDa8Hl78nz3pJemV/0jZGNO/j9CWrX5/xtXwT8s/9Rv+baT94bflPzmRmcgG5ENkO7IL2YJsAvzINmQzsht5ZwP/iaJ3m1H0W5vDpj2hsBzKv/T5buvcGMlouTq593KrW20xAQkxGwvMcHfkHiolKDiGXx/e+QP4zSPIstL8CnIKcgBsnCNb29RXh83zAWLt+Q+NfBAA1XkA8Mv/oYV/BeAKAd5Grf9DE/GGlxkGgOopciw1bouG2nigAQEwwCuKA/ACISAO+6MAVIAm0APGwALYAifgDrzhUQ6G45kK4kEySAUZIAccBSdACTgDzoNqcAlcA02gBbSDB+AJ6AUD4BUcPZPgI5gHS2AFgiAsRAeRIA6IDxKBpCAFSA3SgYwhK8gBcod8oCAoAoqFkqEDUA5UAJVA56Aa6Cp0E2qHuqA+6CU0Dr2HvkDLCCSCFsGM4EGIInYg1BD6CEuEE2InIggRhUhEpCOOIIoR5YiLiEZEO+IJYgAxhviIWEQCJA2SFSmAlEGqIQ2RtkgPZCCSityHzEYWIsuRl5G34Hl+jhxDziJ/ojAoEoofJQNHsBnKGUVGRaH2oXJRJahqVCOqE/UcNY6aR/1C06G50VJoDbQ52g0dhI5HZ6AL0ZXoG+j78GqaRC9hMBhWjBhGFV6N7pgQTBImF3MaU4+5i+nDTGAWsVgsB1YKq421xfpiY7AZ2JPYi9g2bD92EvsDR4PjwyngTHAeuAhcGq4QV4trxfXjpnEreEa8CF4Db4v3x+/B5+Er8LfwPfhJ/AqBiSBG0CY4EUIIqYRiwmXCfcII4SsNDY0gjTqNPQ2FZj9NMc0Vmkc04zQ/aYm0krSGtF60sbRHaKto79K+pP1KR0cnSqdH50EXQ3eErobuHt0o3Q96Er0svTm9P30KfSl9I30//WcGPIMIgz6DN0MiQyFDA0MPwywjnlGU0ZDRl3EfYynjTcYXjItMJCZ5JlumcKZcplqmLqYZIpYoSjQm+hPTieeJ94gTJCRJiGRIIpMOkCpI90mTzBhmMWZz5hDmHOZLzM+Y51mILEosLiwJLKUsd1jGWJGsoqzmrGGseazXWAdZl9l42PTZAtiy2C6z9bN9Z+di12MPYM9mr2cfYF/m4Ocw5gjlyOdo4njNieKU5LTnjOcs47zPOcvFzKXJRebK5rrGNcyN4JbkduBO4j7P3c29yMPLY8oTyXOS5x7PLC8rrx5vCO9x3lbe93wkPh0+Ct9xvja+D/ws/Pr8YfzF/J388wLcAmYCsQLnBJ4JrAiKCToLpgnWC74WIgipCQUKHRfqEJoX5hO2Fk4WrhMeFsGLqIkEixSJPBT5Liom6ip6SLRJdEaMXcxcLFGsTmxEnE5cVzxKvFz8LwmMhJpEqMRpiV5JhKSyZLBkqWSPFEJKRYoidVqqTxotrS4dIV0u/UKGVkZfJk6mTmZcllXWSjZNtkn28w7hHR478nc83PFLTlkuTK5C7pU8Ud5CPk3+lvwXBUkFskKpwl+KdIomiimKzYoLSlJKAUplSkPKJGVr5UPKHcprKqoqVJXLKu9VhVV9VE+pvlBjVrNTy1V7pI5WN1BPUW9R/6mhohGjcU1jTlNGM1SzVnNGS0wrQKtCa0JbUNtX+5z2mA6/jo/OWZ0xXQFdX91y3bd6Qnr+epV60/oS+iH6F/U/G8gZUA1uGHw31DDca3jXCGlkapRt9MyYaOxsXGI8aiJoEmRSZzJvqmyaZHrXDG1maZZv9sKcx5xsXmM+b6Fqsdei05LW0tGyxPKtlaQV1eqWNcLawvqY9YiNiE2ETZMtsDW3PWb72k7MLsrutj3G3s6+1H7KQd4h2eGhI8lxl2Ot45KTgVOe0ytncedY5w4XBhcvlxqX765GrgWuY2473Pa6PXHndKe4N3tgPVw8Kj0WPY09T3hOeil7ZXgN7hTbmbCzy5vTO8z7zi6GXb67GnzQPq4+tT6rvra+5b6LfuZ+p/zmyYbkIvJHfz3/4/7vA7QDCgKmA7UDCwJngrSDjgW9D9YNLgyepRhSSigLIWYhZ0K+h9qGVoWuh7mG1Yfjwn3Cb0YQI0IjOnfz7k7Y3RcpFZkRORalEXUiap5qSa2MhqJ3RjfHMMMX9u5Y8diDseNxOnGlcT/iXeIbEpgSIhK690juydoznWiSeCEJlURO6kgWSE5NHt+rv/fcPmif376OFKGU9JTJ/ab7q1MJqaGpT9Pk0grSvh1wPXArnSd9f/rEQdODdRn0GdSMF4c0D53JRGVSMp9lKWadzPqV7Z/9OEcupzBnNZec+/iw/OHiw+tHAo88y1PJKzuKORpxdDBfN7+6gKkgsWDimPWxxuP8x7OPfzux60RXoVLhmSJCUWzRWLFVcfNJ4ZNHT66WBJcMlBqU1p/iPpV16vtp/9P9ZXpll8/wnMk5s3yWcnbonOm5xnLR8sLzmPNx56cqXCoeXlC7UFPJWZlTuVYVUTVW7VDdWaNaU1PLXZtXh6iLrXt/0eti7yWjS82XZS6fq2etz7kCrsRe+XDV5+rgNctrHQ1qDZevi1w/dYN0I7sRatzTON8U3DTW7N7cd9PiZsctzVs3bsvermoRaCm9w3Inr5XQmt663pbYtng38u5se1D7RMeujlf33O791Wnf+ey+5f1HD0we3Huo/7Dtkfajli6NrpuP1R43PVF50tit3H3jqfLTG89UnjX2qPY096r33urT6mvt1+1vf270/MFf5n89GbAZ6Bt0Hhx64fVibMh/aOZl2MuF4bjhlVf7R9Aj2a8ZXxeOco+Wv5F4Uz+mMnZn3Gi8+63j21cT5ImP76LfrU6mT9FNFU7zTdfMKMy0vDd53/vB88Pkx8iPK7MZn5g+nfos/vn6nN5c97zb/OQCdWH9S+5Xjq9V35S+dSzaLY4uhS+tfM/+wfGj+qfaz4fLrsvTK/Gr2NXiNYm1W78sf42sh6+vR/pSfTevAki4IgIDAfhSBQCdOwCkXgAInlt53nZBwpcPBPx2gWShj4h0+ETtQWWgTTBIzBNsMS4Cb0WQoMHSzNL20zXRVzFUMtYzNRM7SE+Ye1mGWN+wzbB/5FjgXOZa40HwYvkI/HQCREGiEKswuwibKLsYtziPBL8kv5SgtLCMqKzYDmk5OXlFBRVFDSVdZWMVc1VzNRN1Ew0TTUMtfW0tHQ1dJT1ZfVEDHkNmI4LRuvFXkynTl2bd5i0W1ZbHrFKsQ2zcbI3tlO3FHLgcGZ1wzkgXyBXhhnLHezB6cngJ75Txltgl7MPny+nHQib5EwNIgaxBXMGCFOkQ1VCTMJdwSkTy7oLIiqiz1OLo/Jjc2Ky47PgjCcV7qhNbk17tBfukU3btP5n66oBg+u6D7YcwmUJZCtkGOY65gYcTj+TnVR+9mz9csHic6YRMoUVRYPGBk2UlN0v7T707vXgGe5bjnGS51nnbCr8LMZUHqwqrq2tu1j6uG7744dLPetwVtqvi13Qb3K9H3chqPN1U39x2s+tWz+3elid3OlqvtpXeTWnf1aFxj3hvqvPm/doHpx7mPEro8nts/kS2m7579un9Z6d6InsN+kh9E/3Xnqf+ZT8gMogafP+ie6j+ZcFwzCuXEbXXnK9XR0fftI9dGM96u3vC+Z3WpDAcZUvTf81cf1/0IeVj2Cz5E/lz5FzO/I2Fua96384tkb4X/5Rafraa8ktjff1v86+AnEEVoC0xLJjX2AZcLj6IYEQjSctAu0o3TT/EMMT4hukd8RPpK/MSyxrrCtsa+y+ONc4lrq/cczxTvCN8/fz3BW4KVgrlCIeJWIlKiuHFPoh3SdRIZktRpC1lZGTpZOd29Mldly9SSFYkK9krG6goqAqoEdXW1T9rjGh2aTVql+vk6sbr+ehbGCgYchohjN4bPzO5YppvFm3uZKFiyWa5YvXG+p5NrW2+XZJ9oIOjo76TvLOAC8kV67rs9tF9xKPb845X/c6z3sd2HfJJ9qX6Uci+/h4BToH2QTbBlhTLELNQzTDZcIEIlt00kYjI1agf1J/Ra7HoOGK8UILGHqfE6KTC5Ja9Uyk0+/lSZdK0D9ik+x2Mzzh8qDKzLWs4+3su82GFI/Z5EUcP59cVPDr27vh6IWeRcrHdydCSg6VnTjWf7i2bOfPrHHO5xHntCrsL5MrYqkPVxfA+1103d4l4WbHe8UrU1bxrdQ2d10dufGnCNHPclLylcduixe1OYGtMW8rd1PYDHQfvZXQeup/5IPth7qPDXYcfH35yuDv3ac6zrJ5Dvel9qf17n8f9FTWwezDyRcxQ0suDw8delY80vH4w+vLNp3Hwljgh+E5+UmfKfNpv5uz7Tx+VZ5M+tX7+Na+5EPfl8td3i+xLlt9TfjT8nF7hXnVYy/7VuT3/xgh95A7kZ1Q7+hDGESuOXcDdxGcQHGi4aUZpz9OF06szIBjaGdOZLIgMxF7SUWZbFgaWp6zZbCbsEHszRwSnEOcQVw63DvcnnlJeM95vfGX8ZvyfBY4LagiOCO0V5hduFfEWWRUtFlMS6xYPEF+VOCYpJdkm5Sg1JZ0qIyIzJJu7w2DHN7kqeU8FOoU2xUglAaV+5TQVBZVx1Tw1bbVP6qUa5hqLmue17LV+adfpuOtidW/okfWJ+ncNIg35DXuN0oyVjKdNSkxt4XvHbfMoCymLd5ZlVh7WrNbPbQpsHexIdoP2Jx28HYUdPzhddU50MXZlcB12q3SP9jDwpPUc9DqzM9hbwXtl132ffF8vPwm/JXKn/7EA30DFIFTQYHAtJSXEKVQ6DB32JvxWRPHu+EjXKA0qbzQqejZmILY9rj6+LCFvT2pifFJosv/enfvcUpz2O6Tap9kfcEh3OuiesfNQQGZoVnR2Sk5mbsHhsiM1eY1H7+X3FYwe+3wCVShR5FV89OT9kpVTsqf9yk6ceXx2tVzhfEBFyYWeKlS1Vk18bX3dx0uSl0Pqa6/MXVNp2H+9u5GjKay58xbf7ZSWt61WbS3t8h0XO6XuX31o8Gj4cUI339PensN9Ts9FB8Dgx6F3wx9egzci47smaqfQM4kfwaeKefJX3SW1n86rxRvzv/W9b6NgVAA4cQiAje85DjUA5F4EQGwPAGxw7mlHB4CTOkAImAJosQNAFtp/zg8ITjwJgAR4gCRQA2ZwfhkG55RFoB50gQmwBrFDypAjFA2dgJqh13DOJ41wQaQi6hGjSAakATIeeQk5BWdpXqhS1Cs4E/NBX0B/wqhgUjHPsDzYcGwbjoSj4NrxnPhYfD9BkVBEWKUh0zylVaetpmOny6VH0CfRf2eIZVhiTGSCmLKJrMQKkhqplzmEBctygdWYdYotk12KvZcjhpODs5XLn5uG+xqPBy+S9xKfJ5wR9AnkCdoKMQk9Fy4S8RQVEJ0SuygeLaEhCUl2SeVLe8LROS/bv6NFrlK+QGGfIkXJUVlDhU8VUh1Ta1E/rhGiqa1FrzWiXaMTo6urh9Pr028wuG7YZHTLuNXknmmXWY/5oMWo5bTVgvWKLc6O1V7UQc3RyonsnOxS7NrqNuNB8tT3itxZ7j3gQ/DV90siN/t/D1QLSgpuDyGEOodVhC/uNossi5qL1orJiR2NV0o4umchyTX5wT7tlNZUy7SJ9KwM7UyQ1Zdz5fCpvIJ8s2PI4/cL84sDSgxPSZcJnhUpV6qwqYyqLq19cgnUq161aXC/EdyUfPPE7Wt3+tuWOng7zR7EPDr7+Fn3Wo9M387nRwbuDpGGySOXRmfHuSfUJvWm5d/Tf3gxe+Tzjrn2BbMvnd8UFkuWln/Y/7ywvLCqsZby6+7m/rE1/0R4/iWAKjABriAE7APHQR3oBKPgB0SC5CAbKAI6CjVALxEAIQFn+WmIq4i3cB5vhUxHtiFXUNqoA6huNDs6EN2IwWO8MY1YRmwY9glOGpeHW8R74R8QZAlFNEiaKJpxWmfax3SGdK30WvR34Cz2EaM94yicp64Tj5NkSU+ZI+DMs5nVl42GrZk9kIOV4yHnHi5prnHuIh5bXhxvB99+fgMBjMBTwUIhX2FZ4VWRbtEysShxYwkuiS+Sj6XOS6fIeMpq7pCQY5fHy68qzClOKL1QfqxyW/WiWon6IQ2qpqeWobakDqPOou6wXqt+vcFVwwajJuPbJm2mnWaPzXstXli+sZq2XrBZscPZszqIOao7WTv7u+x1LXG76T7sseYluNPCO2bXWZ8eP4is4h8RUBM4FSxKCQm5GrocbhpRuHsmSou6N7otFhVnFV+UMJWonnQkeXqfcUp1Kn3angPT8H7Sm2mR9TDHLLf7iEPeWH7KMd7jdwsDi+lPNpf6nyaVPTi7t1zl/JcLV6tia7TqMBcHLl+4knzN67pKI33TxM3rtw/csWljvzveUdNJfaD1CNs1+KTm6f4erz6d5yIDTIOPhpxfTr5KfM08em3MaXx1onrSfZphputD5qzlZ8a5Fwtnv4YsqnxH/OhZLl0N+qW4Pf9IgAG0mzuAOFCBI8ANhIOD4Ay4DYbh9S8IWUCxUAU0iKBBGMErvwOJQ9ojzyC/oCxQVWg8mop+g3GCV7sNdgBHxv3EFxLUCZM0J2n1aEfokuj56bsY4hklGSeYzhD9SBKk78wPWcpYk9g82fU4pDjZuWi4EdyrPMu8q/xAAAvfQHmEZUW0RR3EgsT3S5yUvAHn3fOyjDsU5Fzl9ylUKPYorahIqLqrFaj3azJruWtX6MzpaesfNnhjpGicYzJupmVeaPHFys76ki2tXZj9Y0dJpxznD64WbrUeeE+K10Nv0V0HfSb9DMmVAchA/6B7FNGQjNCZcKuI+kiWqATqWIxR7OV49oR9ez4mucHrVCWlKpUj7Ug66mByxpdMj6yr2eu5Toerjiwfdcy/fIxwnHLiQZFUce7JuVLXU3fKRM/kw3u///nuC5qVVdVMNYm1UxcdL7XUi17Ju7rU4H39QaNM09Hm+Vv2ty/fIbQGtrW2EzsC7jXeRz2we1j6aOKxxBNKd+XT8R7OXvu+g/3Xn78dIAzKvXAYor48Mlzz6t7IwOup0YU3q+PQW+wE5h1mEkwuT32aHp15+r75Q/nHzNmIT9afpeawc2/mmxeyvnh8lfj65VvLYtqS0XfM984fKT81fy4sX1jxWCWsNq6Rf9H9urbuvjH/0YGKCpvHB0RrAAB6dH39qygA2AIA1vLX11fK19fXzsPJxggAd8O2/kPaPGsYATjLtYH6riz+67+c/wFtHdRx6q0u4gAAAZ1pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+NDUzPC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjQ3NzwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgpcmUCvAAAdVElEQVR4Ae3dYW7byLIGUPPCuyH3vxJqPbpk0H4I7kta9vQ3VDf7EAgyE1qlrlNFfYD/6ON5XPu+n381X+rUCfnwqQvU79ofPnWB+l378z2f5YTatu3DNafAMf9uGreHr0eRmFePzom+Xut97yd69Pneyf1Uq8C5h8uZncuytNby+kEFjvE3n/zxeHys69pcxx6+JkzMq0fnRF/28PX++Im6wLmH/6n/iLsECBAgQGAeAaE4z6x1SoAAAQIvBITiCyC3CRAgQGAeAaE4z6x1SoAAAQIvBITiCyC3CRAgQGAeAaE4z6x1SoAAAQIvBITiCyC3CRAgQGAeAaE4z6x1SoAAAQIvBITiCyC3CRAgQGAeAaE4z6x1SoAAAQIvBITiCyC3CRAgQGAeAaE4z6x1SoAAAQIvBITiCyC3CRAgQGAeAaE4z6x1SoAAAQIvBITiCyC3CRAgQGAeAaE4z6x1SoAAAQIvBITiCyC3CRAgQGAegc/z26pd8wqk5p+qM+8kvtf5XZ2XZfkewIuf2vf9xU+4TeDvAr+er+dxHT8S+3PWa72OxW4t8ev1d61z13kl+7prrcSDcVebs6/ElfRJnOeun2OpvtLz8uvTQ9RFgAABAgROAaFoDwgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUgc/H4xHFSNTbti16pp6KHd823dNxPsyrq3G8PExiXi/fZOAf6M0ncR6fh9ct5Dmv5Xlcy7LE3vUo11wreZ7mw4QL9OZzx/Oci72ua/PkknuYcO6xr2bkUuCuPom+knuYmleqTm8+53n8+jQ1XXUIECBAYHgBoTj8CDVAgAABAikBoZiSVIcAAQIEhhcQisOPUAMECBAgkBIQiilJdQgQIEBgeAGhOPwINUCAAAECKQGhmJJUhwABAgSGFxCKw49QAwQIECCQEhCKKUl1CBAgQGB4AaE4/Ag1QIAAAQIpAaGYklSHAAECBIYXEIrDj1ADBAgQIJASEIopSXUIECBAYHgBoTj8CDVAgAABAikBoZiSVIcAAQIEhhcQisOPUAMECBAgkBIQiilJdQgQIEBgeIHP89u8k1e6XvJsPdTqzeeu5+mtr9S3p+/73sMax89wV5/e9jA+uMaCvfmc51mex5VayNPnKNfI9PGRPE/zYcIFevNJnOdcpHVdm6XuWie5z3ecV28+dz5P80MaLpDY5/S8/Po0PGTlCBAgQGBcAaE47uycnAABAgTCAkIxDKocAQIECIwrIBTHnZ2TEyBAgEBYQCiGQZUjQIAAgXEFhOK4s3NyAgQIEAgLCMUwqHIECBAgMK6AUBx3dk5OgAABAmEBoRgGVY4AAQIExhUQiuPOzskJECBAICwgFMOgyhEgQIDAuAJCcdzZOTkBAgQIhAWEYhhUOQIECBAYV0Aojjs7JydAgACBsIBQDIMqR4AAAQLjCgjFcWfn5AQIECAQFhCKYVDlCBAgQGBcgc/z286TV7pe8mw91OrNJ3Wenups29bDqP+VM/TkfDaYOk8Ky3lSktfU6XFey/O4lmWJCRzlmmslz9N8mHCB3nwS5zkXe13XZqlUHftTH0XK+a51kvuTeL6S56lvxvV3e/M5z+PXp9fvgXckQIAAgU4FhGKng3EsAgQIELheQCheb+4dCRAgQKBTAaHY6WAciwABAgSuFxCK15t7RwIECBDoVEAodjoYxyJAgACB6wWE4vXm3pEAAQIEOhUQip0OxrEIECBA4HoBoXi9uXckQIAAgU4FhGKng3EsAgQIELheQCheb+4dCRAgQKBTAaHY6WAciwABAgSuFxCK15t7RwIECBDoVEAodjoYxyJAgACB6wWE4vXm3pEAAQIEOhUQip0OxrEIECBA4HoBoXi9uXckQIAAgU4FPs9vz05e6XrJs/VQqzef1HkSdbZt62FEXZ8h9S3s+74399njvBJ9NcP8ViDxXPxW7nb/2ZvPeZ7leVypB+2c2FGueXDnwdZ1VecvAnedV299Jc/zl1G+7Z8Tz2mPPr31lTiPz8P6Y5Lcw3Nefn1a93aXAAECBCYSEIoTDVurBAgQIFAXEIp1H3cJECBAYCIBoTjRsLVKgAABAnUBoVj3cZcAAQIEJhIQihMNW6sECBAgUBcQinUfdwkQIEBgIgGhONGwtUqAAAECdQGhWPdxlwABAgQmEhCKEw1bqwQIECBQFxCKdR93CRAgQGAiAaE40bC1SoAAAQJ1AaFY93GXAAECBCYSEIoTDVurBAgQIFAXEIp1H3cJECBAYCIBoTjRsLVKgAABAnUBoVj3cZcAAQIEJhL4PL/VOXklvwU5eS61/iyQmP+2bX8u/sZ/tYd1/Lv6JPa5Lvezu3d1/pnCOD997s/yPC6DG2do6ZMe428umdwf56mPg89YPvXTutubwPl8+fVpb1NxHgIECBB4m4BQfBu9NyZAgACB3gSEYm8TcR4CBAgQeJuAUHwbvTcmQIAAgd4EhGJvE3EeAgQIEHibgFB8G703JkCAAIHeBIRibxNxHgIECBB4m4BQfBu9NyZAgACB3gSEYm8TcR4CBAgQeJuAUHwbvTcmQIAAgd4EhGJvE3EeAgQIEHibgFB8G703JkCAAIHeBIRibxNxHgIECBB4m4BQfBu9NyZAgACB3gSEYm8TcR4CBAgQeJuAUHwbvTcmQIAAgd4EhGJvE3EeAgQIEHibwOfj8Xjbm3vj9wokvsU93cGyLOmSTfWcp87Xm4/Ps/q83K0L/Nqf44Pxue/7+VfzpU6dsDef+mm/f/dYs6c/dYPva/79JxnXjU+fxNXbc+o89ammffz69HiSXAQIECBA4BQQivaAAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBEQilaBAAECBAgUAaFoFQgQIECAQBFYzm8t3rYNCAECBAiEBY7P13DF95dL5kWPPsvzuJZleb+0ExAIChxr3Vzt8Xh8rOvaXKfH56snH871FUv5pOok97nHPfTr0/o+ukuAAAECEwkIxYmGrVUCBAgQqAsIxbqPuwQIECAwkYBQnGjYWiVAgACBuoBQrPu4S4AAAQITCQjFiYatVQIECBCoCwjFuo+7BAgQIDCRgFCcaNhaJUCAAIG6gFCs+7hLgAABAhMJCMWJhq1VAgQIEKgLCMW6j7sECBAgMJGAUJxo2FolQIAAgbqAUKz7uEuAAAECEwkIxYmGrVUCBAgQqAsIxbqPuwQIECAwkYBQnGjYWiVAgACBuoBQrPu4S4AAAQITCSz7vj+3bZuoZa1+CSS+9fqslfwm7q+ztf597HVridjre3y++MTGWy3Eucrz0ZPP/530+GB8Hgc7/2q+jqLP1J/mwxwFUmc56ySu3s6T6Oms0VtfqX1Wp74hKZ/k/vRWqy74vbs9On/v5PWfSvWVruPXp8dT5CJAgAABAqeAULQHBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIrAcn5r8bZtQCYUOL4XO9L1siyROmeRYx9jte5WKPmc9uSc7OtuM//qJzGvpHNv5/lyav377Gs5PhifyQ+1xAet89RHm/JJzOo8aeo8Z63EmR6Px8e6rme5pqu3Ond17q2v5HmaFvC3Fyeei2RfvZ3nN6qm/zz78uvTJkIvJkCAAIE7CQjFO01TLwQIECDQJCAUm/i8mAABAgTuJCAU7zRNvRAgQIBAk4BQbOLzYgIECBC4k4BQvNM09UKAAAECTQJCsYnPiwkQIEDgTgJC8U7T1AsBAgQINAkIxSY+LyZAgACBOwkIxTtNUy8ECBAg0CQgFJv4vJgAAQIE7iQgFO80Tb0QIECAQJOAUGzi82ICBAgQuJOAULzTNPVCgAABAk0CQrGJz4sJECBA4E4CQvFO09QLAQIECDQJCMUmPi8mQIAAgTsJfJ7fLp68kt/unDjXHc+T+Nbr07Y3mx7PtO978xpu29ZcI10g8dzfta+0daJeb89qYn8SLukaZ1/L8QH7PP9jXdfm+snBJT7473qehM057Lv6NC/ybwUS1knn347W9J+99ZU4j8+xppX40Yt7mldq7l91/Pr0R6vghwkQIEDgzgJC8c7T1RsBAgQI/EhAKP6Iyw8TIECAwJ0FhOKdp6s3AgQIEPiRgFD8EZcfJkCAAIE7CwjFO09XbwQIECDwIwGh+CMuP0yAAAECdxYQineert4IECBA4EcCQvFHXH6YAAECBO4sIBTvPF29ESBAgMCPBITij7j8MAECBAjcWUAo3nm6eiNAgACBHwkIxR9x+WECBAgQuLOAULzzdPVGgAABAj8SEIo/4vLDBAgQIHBnAaF45+nqjQABAgR+JCAUf8TlhwkQIEDgzgLLvu/Pbdvu3KPeCBD4H4Hjuf+ff/n5/yY/NxLn+XkHf35Fsq8/v8P4/9rTvNKay/O4lmWJ1T3KNddynjohn+t86u/0/bt3fC4ej8fHuq7fR/jLT/ZWJ/l8/aXl4f85sc+9zf3rPH59Ovx6aoAAAQIEUgJCMSWpDgECBAgMLyAUhx+hBggQIEAgJSAUU5LqECBAgMDwAkJx+BFqgAABAgRSAkIxJakOAQIECAwvIBSHH6EGCBAgQCAlIBRTkuoQIECAwPACQnH4EWqAAAECBFICQjElqQ4BAgQIDC8gFIcfoQYIECBAICUgFFOS6hAgQIDA8AJCcfgRaoAAAQIEUgJCMSWpDgECBAgMLyAUhx+hBggQIEAgJSAUU5LqECBAgMDwAkJx+BFqgAABAgRSAp/ntw0nr96+tbq386S9W2fX23l6m1er79fre3NOneeudb7m5u8/CyTmvm3bn4v/g3/d9/0fvOr/v+RXX8/jOgqefzVfx1s8U3+aD3MUSJ0lWSfRV2pevdXhXN8OPnWf1D7f1bm3vno7z9f++PXpMRkXAQIECBA4BYSiPSBAgAABAkVAKFoFAgQIECBQBISiVSBAgAABAkVAKFoFAgQIECBQBISiVSBAgAABAkVAKFoFAgQIECBQBISiVSBAgAABAkVAKFoFAgQIECBQBISiVSBAgAABAkVAKFoFAgQIECBQBISiVSBAgAABAkVAKFoFAgQIECBQBISiVSBAgAABAkVAKFoFAgQIECBQBISiVSBAgAABAkVAKFoFAgQIECBQBD4fj8fHtm3dgSzL0t2ZEge6a1/Ht1YneGI1Us6pvs7nrKcrdZ6e6tz5cyy1h6kdTM09dZ7k8748jytV8GzwKNfc553P04zTaYHe5p5iSvR1foCs69p8JHXqhMnPjfo7XX83sYdJn97Ok5rI2Zdfn6Y01SFAgACB4QWE4vAj1AABAgQIpASEYkpSHQIECBAYXkAoDj9CDRAgQIBASkAopiTVIUCAAIHhBYTi8CPUAAECBAikBIRiSlIdAgQIEBheQCgOP0INECBAgEBKQCimJNUhQIAAgeEFhOLwI9QAAQIECKQEhGJKUh0CBAgQGF5AKA4/Qg0QIECAQEpAKKYk1SFAgACB4QWE4vAj1AABAgQIpASEYkpSHQIECBAYXkAoDj9CDRAgQIBASkAopiTVIUCAAIHhBT7Pb/NOXslvd06cq7fzJHrqscZdnVN97fvePLZt25prfBW443m+ervj3+nP6Vaj3s7T2s/X63/19Tyu4wE5/2q+jsLP1J/mwxwFUmc56ySulHOqTtInVasn51RPqf1xnvp29OaTek7Vqc897ePXp8eT5CJAgAABAqeAULQHBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIrA5+Px+Ni2rTuQZVm6OtPp1Hr16NzaU/r1qbkf38adPlpTvVRfTYf47cWJff6tXPN/9ubT23magcMFUs9XYg+Tn6tnX8vzuJILcJRr5u/tPOfg1nXtqq/mw5QCvc2rp756nHtiXj32lZq7OtcI3HUPz778+vSaHfIuBAgQIDCAgFAcYEiOSIAAAQLXCAjFa5y9CwECBAgMICAUBxiSIxIgQIDANQJC8Rpn70KAAAECAwgIxQGG5IgECBAgcI2AULzG2bsQIECAwAACQnGAITkiAQIECFwjIBSvcfYuBAgQIDCAgFAcYEiOSIAAAQLXCAjFa5y9CwECBAgMICAUBxiSIxIgQIDANQJC8Rpn70KAAAECAwgIxQGG5IgECBAgcI2AULzG2bsQIECAwAACQnGAITkiAQIECFwjIBSvcfYuBAgQIDCAwOf5LdzJK12v9Wyp86TqtPaTfv1d+1qWJUK173ukTqpIYl7btqWOo86kAqnnqze+X8/X87iOB//8q/lSp054V59jsZ+pP3XB791NneWsk7h6m3tvPr2d587zSlr3VCv5nPr16TFZFwECBAgQOAWEoj0gQIAAAQJFQChaBQIECBAgUASEolUgQIAAAQJFQChaBQIECBAgUASEolUgQIAAAQJFQChaBQIECBAgUASEolUgQIAAAQJFQChaBQIECBAgUASEolUgQIAAAQJFQChaBQIECBAgUASEolUgQIAAAQJFQChaBQIECBAgUASEolUgQIAAAQJFQChaBQIECBAgUASEolUgQIAAAQJFQChaBQIECBAgUAQ+H4/Hx7ZtQCYVOL5lvKvOz33s6UqdJ1Gnx+d0WZaexvXRm3Nvz1dXwwoeJrWH57yW53GlCgZ7VOoigWP8ze+U3J/Eec4PxnVdm/vqrU5vzsnzNA+rFEjsT7Kv3s5zV+dkX359mtJUhwABAgSGFxCKw49QAwQIECCQEhCKKUl1CBAgQGB4AaE4/Ag1QIAAAQIpAaGYklSHAAECBIYXEIrDj1ADBAgQIJASEIopSXUIECBAYHgBoTj8CDVAgAABAikBoZiSVIcAAQIEhhcQisOPUAMECBAgkBIQiilJdQgQIEBgeAGhOPwINUCAAAECKQGhmJJUhwABAgSGFxCKw49QAwQIECCQEhCKKUl1CBAgQGB4AaE4/Ag1QIAAAQIpAaGYklSHAAECBIYX+Dy/Xdw1r0Bv809+63liqvu+N5fZtq25RrpAb86p/nrb597Oc1fnZF/L87iSD8hRrvl85yKt66rOXwR6m1fyPH9p+W3/nNhnPvXxJX0S8+rt8+euPr325den9efVXQIECBCYSEAoTjRsrRIgQIBAXUAo1n3cJUCAAIGJBITiRMPWKgECBAjUBYRi3cddAgQIEJhIQChONGytEiBAgEBdQCjWfdwlQIAAgYkEhOJEw9YqAQIECNQFhGLdx10CBAgQmEhAKE40bK0SIECAQF1AKNZ93CVAgACBiQSE4kTD1ioBAgQI1AWEYt3HXQIECBCYSEAoTjRsrRIgQIBAXUAo1n3cJUCAAIGJBITiRMPWKgECBAjUBYRi3cddAgQIEJhI4PP8lunklai3bVvySF3V2ve9q/Mk5tVVQ+HDJL8dPHy0Lsr1tj/mVV+LxLx6/HxOzf38fF6ex5UqeI7jKFefyjfuJs/zjbe79Ed683Gea8Z/R+fzA3Zd12bAOz/vzTjhAnfcw+T+nD5+fRpeOuUIECBAYFwBoTju7JycAAECBMICQjEMqhwBAgQIjCsgFMednZMTIECAQFhAKIZBlSNAgACBcQWE4rizc3ICBAgQCAsIxTCocgQIECAwroBQHHd2Tk6AAAECYQGhGAZVjgABAgTGFRCK487OyQkQIEAgLCAUw6DKESBAgMC4AkJx3Nk5OQECBAiEBYRiGFQ5AgQIEBhXQCiOOzsnJ0CAAIGwgFAMgypHgAABAuMKCMVxZ+fkBAgQIBAWEIphUOUIECBAYFyBz/Pbs5NXul7ybD3U6s3Hea7Zirs699bXNdMc912S31KfUOjtPOc+L8/jSh7sKNdslTxP82HCBXrzSZznXKR1XZulUnWS+3NHn5Rzqo551R+dpE/9ndw9n3e/PrUHBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCAhFq0CAAAECBIqAULQKBAgQIECgCCz7vj+3bYuBHPWaayXP03yYcIHefHo7T5i7uVzCp/kQNy+QfN57mleyr5uvQDftnfuzPI9rWZbYoY5yzbWS52k+TLhAbz69nSfFnejr8Xh8rOvafCR16oR39enxcyzxXCT76vE8fn1af17dJUCAAIGJBITiRMPWKgECBAjUBYRi3cddAgQIEJhIQChONGytEiBAgEBdQCjWfdwlQIAAgYkEhOJEw9YqAQIECNQFhGLdx10CBAgQmEhAKE40bK0SIECAQF1AKNZ93CVAgACBiQSE4kTD1ioBAgQI1AWEYt3HXQIECBCYSEAoTjRsrRIgQIBAXUAo1n3cJUCAAIGJBITiRMPWKgECBAjUBYRi3cddAgQIEJhIQChONGytEiBAgEBdQCjWfdwlQIAAgYkEPs9vvU5e6XrJs/VQqzef3s6TmlHy28FTZ7pjnX3fI22l9jBRZ9u2SE89Fkn4JPvq7Tn95fM8rqPJ2J+zXut1PGitJX69/q51eptX8jxq5Z7FKywTD2pvz+kVbj99D8715yLp49enx3a6CBAgQIDAKSAU7QEBAgQIECgCQtEqECBAgACBIiAUrQIBAgQIECgCQtEqECBAgACBIiAUrQIBAgQIECgCQtEqECBAgACBIiAUrQIBAgQIECgCQtEqECBAgACBIiAUrQIBAgQIECgCQtEqECBAgACBIiAUrQIBAgQIECgCQtEqECBAgACBIiAUrQIBAgQIECgCQtEqECBAgACBIiAUrQIBAgQIECgCQtEqECBAgACBIvD5eDyiGMuyROsp9u8KpOf/755W9d4Eenve933vjShyntRz2ludCM5RJLWH5/4sz+NKFUw1qM51Asf4m98suT+J85wP/rquzX2l6iR9mpsqBRLOd+0rNXd16tva6/749Wl9bu4SIECAwEQCQnGiYWuVAAECBOoCQrHu4y4BAgQITCQgFCcatlYJECBAoC4gFOs+7hIgQIDARAJCcaJha5UAAQIE6gJCse7jLgECBAhMJCAUJxq2VgkQIECgLiAU6z7uEiBAgMBEAkJxomFrlQABAgTqAkKx7uMuAQIECEwkIBQnGrZWCRAgQKAuIBTrPu4SIECAwEQCQnGiYWuVAAECBOoCQrHu4y4BAgQITCQgFCcatlYJECBAoC4gFOs+7hIgQIDARALLvu/Pbdsmalmrvwsc8//9f//Rfyf3J3Gef9TEv/iipE/qmAnnu/aVMlanLtDr/vwX/DtqSWutylUAAAAASUVORK5CYII=" id="hidden-img" class="hide">
+		<div class="clear"></div>
+		<div class="space small"></div>
+		<label for="import-img" class="hide"></label>
+		<div class="clear"></div>
+		<div class="space"></div>
+		<button onclick="$(&#39;#div-new&#39;).hide();">Close</button>
+		</div>
+	</center>
+	</div>
+	<!-- END NEW OVERLAY -->
+
+	<!-- START SAVE OVERLAY -->
+	<div class="overlay hide" id="div-save">
+	<center>
+		<div class="box">
+		<h3>Save Project</h3>
+		<div class="space"></div>
+		<h5>Save As : </h5>
+		<input type="text" placeholder="Enter project name" id="save-name">
+		<button class="left" onclick="saveProject($(&#39;#save-name&#39;).val());">Save</button>
+		<div class="clear"></div>
+		<div id="div-save-ext">
+		<h5>Save in existing project : </h5>
+		<div class="project-list" id="list-save">
+			
+		</div>
+		</div>
+		<div class="space"></div>
+		<button onclick="$(&#39;#div-save&#39;).hide();">Close</button>
+		</div>
+	</center>
+	</div>
+	<!-- END SAVE OVERLAY -->
+
+	<!-- START TOOLS OVERLAY -->
+	<div class="overlay hide" id="div-tools">
+	<center>
+		<div class="box">
+		<h3>Tools List</h3>
+		<div class="space"></div>
+		<div class="project-list noselect" id="list-tools">
+			<div id="tools-extract">
+				<h5>Extract QR Information</h5>
+				<h6>Force decode and get information about the current QR code as much as possible</h6>
+			</div>
+			<div id="tools-rs-decoder">
+				<h5>Reed-Solomon Decoder</h5>
+				<h6>Errors and Erasures correction by decoding Reed-Solomon blocks</h6>
+			</div>
+			<div id="tools-brute-force">
+				<h5>Brute-force Format Info Pattern</h5>
+				<h6>Try all possibilities of Format Info Pattern when decoding</h6>
+			</div>
+			<div id="tools-masking">
+				<h5>Data Masking</h5>
+				<h6>Simulate data masking (XOR) with Mask pattern</h6>
+			</div>
+			<div id="tools-pad-recovery">
+				<h5>Padding Bits Recovery</h5>
+				<h6>Recover missing bits by placing terminator and padding bits</h6>
+			</div>
+			<div id="tools-data-analysis">
+				<h5>Data Sequence Analysis (<i>Experimental</i>)</h5>
+				<h6>Analyze data sequence of QR code</h6>
+			</div>
+		</div>
+		<div class="space"></div>
+		<button onclick="$(&#39;#div-tools&#39;).hide();">Close</button>
+		</div>
+	</center>
+	</div>
+	<!-- END TOOLS OVERLAY -->
+
+	<!-- START LOAD OVERLAY -->
+	<div class="overlay hide" id="div-load">
+	<center>
+		<div class="box">
+		<h3>Load Project</h3>
+		<div class="space"></div>
+		<div class="project-list" id="list-load">
+			
+		</div>
+		<div class="space"></div>
+		<button onclick="$(&#39;#div-load&#39;).hide();">Close</button>
+		</div>
+	</center>
+	</div>
+	<!-- END LOAD OVERLAY -->
+
+	<!-- START ABOUT OVERLAY -->
+	<div class="overlay hide" id="div-about">
+	<center>
+		<div class="box">
+		<h3>About</h3>
+		<div class="space"></div>
+		<div class="clear"></div>
+		<h4 id="txt-version">QRazyBox v0.3.3</h4>
+		<h6>QR Code Analysis and Recovery Toolkit</h6>
+		<div class="space"></div>
+		<p>Written by  : Merricx</p>
+		<p>License : MIT</p>
+		<br>
+		<p>Issues or pull requests : </p>
+		<p><a href="https://github.com/merricx/qrazybox/">https://github.com/merricx/qrazybox/</a></p>
+		<br>
+		<p><i>QR Code is registered trademark of DENSO WAVE Inc.</i></p>
+		<div class="space"></div>
+		<button onclick="$(&#39;#div-about&#39;).hide();">Close</button>
+		</div>
+	</center>
+	</div>
+	<!-- END ABOUT OVERLAY -->
+
+	<!-- START QR DECODER OVERLAY -->
+	<div class="overlay hide" id="div-decode">
+	<center>
+		<div class="box">
+		<h3>QR Decoder</h3>
+		<div class="space"></div>
+		<h5>Decoded Message : </h5>
+		<textarea id="decode-message" spellcheck="false" style="width: 100%; margin: 0;" readonly=""></textarea>
+		<div class="clear"></div>
+		<div id="div-decode-error" class="hide">
+		<h5>Error : </h5>
+		<input id="decode-error" type="text" readonly="">
+		</div>
+		<div class="clear"></div>
+		<div class="space"></div>
+		<button onclick="$(&#39;#div-decode&#39;).hide();">Close</button>
+		</div>
+	</center>
+	</div>
+	<!-- END QR DECODER OVERLAY -->
+
+	<!-- START BRUTE-FORCE-FORMAT-INFO OVERLAY -->
+	<div class="overlay hide" id="div-brute-force-loader">
+	<center>
+		<div class="box">
+		<h3>Brute-force Format Info Pattern</h3>
+		<div class="space"></div>
+		<div id="brute-force-content" class="hide">
+			<div class="clear"></div>
+			<h5>Decoded Message : </h5>
+			<input id="brute-force-decoded-data" type="text" readonly="">
+			<div class="clear"></div>
+			<h5 id="brute-force-ecc">Error Correction Level : <span></span></h5>
+			<h5 id="brute-force-mask">Mask Pattern : <span></span></h5>
+			<div class="paging">
+				<button id="btn-brute-force-counter-prev"> &lt; </button>
+				<h5 id="brute-force-result-counter">1 of 1 result</h5>
+				<button id="btn-brute-force-counter-next"> &gt; </button>
+			</div>
+		</div>
+		<h5 id="brute-force-msg-wait">Brute-forcing...</h5>
+		<h5 id="brute-force-msg-fail" class="hide">No message found in any possible format info patterns. Check the data modules and try again.</h5>
+		<div class="clear"></div>
+		<div class="space"></div>
+		<button class="hide" id="btn-brute-force-apply-pattern" onclick="$(&#39;#div-brute-force-loader&#39;).hide();">Apply</button>
+		<!--<button id="btn-brute-force-close">Close</button>-->
+		</div>
+		<div id="brute-force-hidden-content">
+		</div>
+	</center>
+	</div>
+	<!-- END BRUTE-FORCE-FORMAT-INFO OVERLAY -->
+
+	<!-- START FORMAT INFORMATION PATTERN OVERLAY -->
+	<div class="overlay hide" id="format-information-box">
+	<center>
+		<div class="box">
+		<h3>Format Info Pattern</h3>
+		<div class="space"></div>
+		<div id="format-info-msg" class="hide">
+			<h5>Format info pattern is currently set to be Brute-forced.</h5>
+		</div>
+		<div id="format-info-content">
+			<select class="select" id="select-format-info-pos">
+				<option value="TOP_LEFT">Top Left</option>
+				<option value="TOP_RIGHT">Top Right</option>
+				<option value="BOTTOM_LEFT">Bottom Left</option>
+			</select>
+			<div class="space"></div>
+			<table id="qr-format-info" class="qr-tab">
+
+			</table>
+			<div class="space"></div>
+
+			<div class="row">
+				<div class="col">
+					<h5 class="left">Error Correction Level:</h5>
+				</div>
+				<div class="col">
+					<div id="slider-ecc" class="slider">
+						<div id="ecc-l">L</div>
+						<div id="ecc-m">M</div>
+						<div id="ecc-q">Q</div>
+						<div id="ecc-h">H</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="row">
+				<div class="col">
+					<h5 class="left">Mask Pattern :</h5>
+				</div>
+				<div class="col">
+					<div id="slider-mask" class="slider">
+						<div id="mask-0">0</div>
+						<div id="mask-1">1</div>
+						<div id="mask-2">2</div>
+						<div id="mask-3">3</div>
+						<div id="mask-4">4</div>
+						<div id="mask-5">5</div>
+						<div id="mask-6">6</div>
+						<div id="mask-7">7</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear space"></div>
+		<button id="btn-save-info">Save</button>
+		<button onclick="$(&#39;#format-information-box&#39;).hide();">Cancel</button>
+		</div>
+	</center>
+	</div>
+	<!-- END FORMAT INFORMATION PATTERN OVERLAY -->
+
+	<!-- START REED-SOLOMON DECODER OVERLAY -->
+	<div class="overlay hide" id="div-rs-decoder">
+		<center>
+			<div class="box">
+				<h3>Reed-Solomon Decoder</h3>
+				<div class="space"></div>
+				<div id="rs-decoder-page-1" class="hide">
+					<div class="left">
+						
+					</div>
+					<h6 class="left"><i>Note: Input must be in Decimal value and separated by comma</i></h6>
+				</div>
+				<div id="rs-decoder-page-2" class="hide">
+					<h5>Decoded Reed-Solomon blocks : </h5>
+					<input type="text" id="rs-decoder-output" readonly="">
+					<div class="clear"></div>
+					<h5>Final data string : </h5>
+					<textarea readonly="" spellcheck="false" id="rs-decoder-final-msg" class="left" rows="5"></textarea>
+					<div class="clear"></div>
+					<h6 class="left invisible" id="rs-decoder-error">ERROR: Error here!!!</h6>
+				</div>
+				<div class="clear"></div>
+				<div class="space"></div>
+				<div class="right">
+					<button id="btn-rs-decoder-prev" class="hide">Back</button>
+					<button id="btn-rs-decoder-next">Decode</button>
+					<!--<button id="btn-rs-decoder-apply" class="hide">Apply</button>-->
+				</div>
+				<button class="left" onclick="$(&#39;#div-rs-decoder&#39;).hide();">Close</button>
+				<div class="clear"></div>
+			</div>
+		</center>
+	</div>
+	<!-- END REED-SOLOMON DECODER OVERLAY -->
+
+	<!-- START DATA MASKING OVERLAY -->
+	<div class="overlay hide" id="div-data-masking">
+		<center>
+			<div class="box">
+				<h3>Data Masking</h3>
+				<div class="space"></div>
+				<div class="row">
+					<div class="col">
+						<h5 class="left">Mask Pattern :</h5>
+					</div>
+					<div class="col">
+						<div class="slider" id="data-masking-slider">
+							<div data="0">0</div>
+							<div data="1">1</div>
+							<div data="2">2</div>
+							<div data="3">3</div>
+							<div data="4">4</div>
+							<div data="5">5</div>
+							<div data="6">6</div>
+							<div data="7">7</div>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="space"></div>
+				<button class="left" onclick="$(&#39;#div-data-masking&#39;).hide();">Close</button>
+				<button class="right" id="btn-data-masking-apply">Apply</button>
+				<div class="clear"></div>
+			</div>
+		</center>
+	</div>
+	<!-- END DATA MASKING OVERLAY -->
+
+	<!-- START PADDING BITS RECOVERY OVERLAY -->
+	<div class="overlay hide" id="div-padding-recovery">
+		<center>
+			<div class="box large">
+				<h3>Padding Bits Recovery</h3>
+				<div class="space"></div>
+				<div class="preview-box left">
+					<table id="qr-dummy" class="qr-tab"></table>
+				</div>
+				<div class="left">
+					<div id="div-pad-rec-error" class="hide">
+						<h5 class="left">Error : </h5>
+						<textarea spellcheck="false" readonly="" style="width:100%;"></textarea>
+					</div>
+					<div id="div-pad-rec-data">
+						<h5>Bits before recovery : </h5>
+						<textarea spellcheck="false" id="pad-rec-before" readonly="" style="width:100%;"></textarea>
+						<h5>Bits after recovery : </h5>
+						<textarea spellcheck="false" id="pad-rec-after" readonly="" style="width:100%;"></textarea>
+					</div>
+					<div id="div-pad-rec-warning" class="hide">
+						<h5 class="left">Warning : </h5>
+						<textarea spellcheck="false" readonly="" style="width:100%;"></textarea>
+					</div>
+					<h6><i>Note : Recovered modules are marked with green color</i></h6>
+					<div class="space"></div>
+					<button id="btn-pad-rec-apply">Apply</button>
+					<button id="btn-pad-rec-cancel">Cancel</button>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</center>
+	</div>
+	<!-- END PADDING BITS RECOVERY OVERLAY -->
+
+	<!-- START WARNING OVERLAY -->
+	<div class="warning hide">
+		<center><h3>Sorry, but QRazyBox doesn't work on mobile!</h3></center>
+	</div>
+	<!-- END WARNING OVERLAY -->
+
+
+<!-- START LOAD JAVASCRIPT -->
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/jquery.min.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/modernizr-custom.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/table.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/sqrd.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/reedsolomon.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/grid.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/version.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/detector.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/formatinf.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/errorlevel.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/bitmat.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/datablock.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/bmparser.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/datamask.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/rsdecoder.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/gf256poly.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/gf256.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/decoder.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/qrcode.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/findpat.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/alignpat.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/databr.js"></script>
+<script type="text/javascript" src="./QRazyBox - QR Code Analysis and Recovery Toolkit_files/main.js"></script>
+<script type="text/javascript">
+	//Detect mobile browsers (http://stackoverflow.com/questions/11381673/detecting-a-mobile-browser) and support detection for some HTML5 features
+	var is_mobile = false;
+
+	(function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) is_mobile = true;})(navigator.userAgent||navigator.vendor||window.opera);
+
+
+	if(is_mobile) $(".warning").show();
+
+	//Detect unsupported HTML features using Modernizr
+	else if(!Modernizr.canvas || !Modernizr.fileinput || !Modernizr.filereader || !Modernizr.imgcrossorigin || !Modernizr.json || !Modernizr.localstorage)
+		$(".warning").show().find("h3").html("Please, upgrade your browser to use QRazyBox.<br>Unfortunately, your browser doesn't support some features that used by this tool.");
+
+	$(window).load(function(){
+		$(".loader").delay(1000).fadeOut();
+	})
+</script>
+<!-- END LOAD JAVASCRIPT -->
+
+<!-- START NOSCRIPT TAG -->
+<noscript>
+	<div>
+		<center><h4>Please enable your Javascript to use this tool.</h4></center>
+	</div>
+</noscript>
+<!-- END NOSCRIPT TAG -->
+
+
+</body></html>
